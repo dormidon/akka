@@ -245,8 +245,8 @@ class BalancingDispatcherConfigurator(_config: Config, _prerequisites: Dispatche
         "BalancingDispatcher must have 'mailbox-requirement' which implements akka.dispatch.MultipleConsumerSemantics; " +
           s"dispatcher [$id] has [$requirement]")
     val mailboxType =
-      if (config.hasPath("mailbox-type")) {
-        val mt = mailboxes.lookup(id)
+      if (config.hasPath("mailbox")) {
+        val mt = mailboxes.lookup(config.getString("mailbox"))
         if (!requirement.isAssignableFrom(mailboxes.getProducedMessageQueueType(mt)))
           throw new IllegalArgumentException(
             s"BalancingDispatcher [$id] has 'mailbox-type' [${mt.getClass}] which is incompatible with 'mailbox-requirement' [$requirement]")
